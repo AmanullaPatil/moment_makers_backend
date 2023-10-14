@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const connectToMongo = require("./database/db");
-
+const authRoutes = require('./routes/auth')
 const path = require('path');
 
 const cors = require('cors');
@@ -15,7 +15,7 @@ connectToMongo();
 
 
 //Express APIs
-const port = 6000
+const port = 5000
 
 
 
@@ -45,7 +45,7 @@ app.get('/login', (req, res) => {
 
 app.use('/api', routes);
 
-app.use('/auth', require("./routes/auth"));
+app.use('/auth',authRoutes);
 
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

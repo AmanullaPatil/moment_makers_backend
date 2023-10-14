@@ -2,10 +2,6 @@ const bcrypt = require('bcrypt');
 const Admin = require('../models/Admin');
 
 
-
-
-
-
 const createAdmin = async (req,res) => {
     // return 1 
     const { name, email, password } = req.body;
