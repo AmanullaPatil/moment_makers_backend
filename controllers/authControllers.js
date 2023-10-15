@@ -1,5 +1,7 @@
 const bcrypt = require('bcryptjs')
 const User = require('../models/User')
+const { body, validationResult } = require('express-validator');
+var jwt = require('jsonwebtoken');
 
 const userLogin = async (req, res) => {
 
@@ -37,7 +39,7 @@ const userLogin = async (req, res) => {
             }
         }
 
-        const authToken = jwt.sign(data, JWT_SECRET);
+        const authToken = jwt.sign(data, process.env.JWT_SECRET);
         success = true;
         res.json({ success, authToken });
 

@@ -1,5 +1,7 @@
 const Organizer = require('../models/Organizer')
 const bcrypt = require('bcryptjs')
+const { body, validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken')
 
 const organizersControllers =  async (req, res) => {
     try {
@@ -51,7 +53,7 @@ const createorganizer = async (req, res) => {
               id: user.id
           }
       }
-      const authToken = jwt.sign(data, JWT_SECRET);
+      const authToken = jwt.sign(data, process.env.JWT_SECRET);
       success = true;
       console.log({ success, authToken });
       res.json({ success, authToken });
@@ -99,7 +101,7 @@ const vendorlogin = async (req, res) => {
           }
       }
 
-      const authToken = jwt.sign(data, JWT_SECRET);
+      const authToken = jwt.sign(data, process.env.JWT_SECRET);
       success = true;
       res.json({ success, authToken });
 

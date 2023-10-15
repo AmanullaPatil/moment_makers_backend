@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const connectToMongo = require("./database/db");
@@ -22,7 +23,7 @@ const port = 5000
 //Middleware for the "req" 
 app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:5000', 'http://localhost:3000', '*', 'http://localhost:8000'],
+  origin: ['http://localhost:5000', 'http://localhost:3000', '*', 'http://localhost:8000', 'localhost:3000'],
   credentials: true,
   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 

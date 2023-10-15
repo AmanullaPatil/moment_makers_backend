@@ -1,5 +1,9 @@
  const User = require('../models/User')
  const bcrypt = require('bcryptjs')
+const { body, validationResult } = require('express-validator');
+var jwt = require('jsonwebtoken');
+
+// const process.env.JWT_SECRET = "thisISveryImportant@forSecurity";
 
  const createUser = async (req, res) => {
     //console.log(req.body);
@@ -50,7 +54,7 @@
             }
         }
 
-        const authToken = jwt.sign(data, JWT_SECRET);
+        const authToken = jwt.sign(data, process.env.JWT_SECRET);
         success = true;
         // console.log({ success, authToken });
         res.json({ success, authToken });
@@ -87,4 +91,25 @@ const getUsers = async (req, res) => {
 
 }
 
-module.exports = {createUser, getUsers}
+const deleteUser = async (req, res) => {
+    try {
+      const userId = req.params.userId;
+  
+      // Check if the user with the given ID exists
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ success: false, error: 'User not found' });
+      }
+  
+      // Delete the user
+      await User.findByIdAndDelete(userId);
+  
+      res.json({ success: true, message: 'User deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      res.status(500).json({ success: false, error: 'Internal server error' });
+    }
+  }
+
+module.exports = { createUser, getUsers, deleteUser }

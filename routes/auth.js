@@ -44,10 +44,11 @@ const JWT_SECRET = "thisISveryImportant@forSecurity";
 //FOR image uploading
 const multer = require('multer');
 const path = require('path');
-const { organizersControllers, createorganizer, vendorlogin, getOrganizers } = require('../controllers/organizer');
+const { organizersControllers, createorganizer, vendorlogin, getOrganizers, deleteorganizer } = require('../controllers/organizer');
 const uploadImageConrollers = require('../controllers/uploadImage');
-const { createUser, getUsers } = require('../controllers/user-controller');
+const { createUser, getUsers, deleteUser } = require('../controllers/user-controller');
 const userLogin = require('../controllers/authControllers');
+const { createAdmin, adminLogIn } = require('../controllers/admin-controller');
 
 
 
@@ -134,26 +135,7 @@ router.get('/getuser', fetchuser, getUsers)
 router.get('/getorganizer', fetchuser, getOrganizers)
 
 // ---------------------- FOR Deleting the user-/
-router.delete('/deleteuser/:userId', async (req, res) => {
-    try {
-      const userId = req.params.userId;
-  
-      // Check if the user with the given ID exists
-      const user = await User.findById(userId);
-  
-      if (!user) {
-        return res.status(404).json({ success: false, error: 'User not found' });
-      }
-  
-      // Delete the user
-      await User.findByIdAndDelete(userId);
-  
-      res.json({ success: true, message: 'User deleted successfully' });
-    } catch (error) {
-      console.error('Error deleting user:', error);
-      res.status(500).json({ success: false, error: 'Internal server error' });
-    }
-  });
+router.delete('/deleteuser/:userId', deleteUser);
 
 
 
@@ -163,10 +145,10 @@ router.delete('/deleteuser/:userId', async (req, res) => {
 
 
   //FOR deleting the organizer
-  router.delete('/deleteorganizer/:userId')
+  router.delete('/deleteorganizer/:userId', deleteorganizer)
 
 // API endpoint to fetch organizer data
-router.get('/getusers');
+// router.get('/getusers');
 
 
 
@@ -178,7 +160,7 @@ router.get('/getusers');
    
 
 
-router.post('/page1/createadmin')
+router.post('/page1/createadmin', createAdmin)
 
         // .then(user => res.json(user))
         // .catch(err=> {console.log(err)
@@ -189,7 +171,7 @@ router.post('/page1/createadmin')
 
 
 //**** To login the user with correct creds   /auth/adminlogin        ---- No LOGIN REQUIRED  ----- */
-router.post('/adminlogin')
+router.post('/adminlogin', adminLogIn)
 
 
 module.exports = router;

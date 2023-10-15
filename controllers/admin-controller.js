@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
 const Admin = require('../models/Admin');
+const { body, validationResult } = require('express-validator');
+
 
 
 const createAdmin = async (req,res) => {
@@ -20,7 +22,7 @@ const createAdmin = async (req,res) => {
             'name': name,
             'password':password
         });
-        // result.password = undefined;
+        result.password = undefined;
         res.send(result);
     }
 }catch(err){ 
@@ -60,7 +62,7 @@ const updateAdmin = async(req,res)=>{
             res.send(updatePassword)
         }
         }catch(error){
-            res.status(500).json(error);
+            res.status(500).json(error); 
         }
 }
 
