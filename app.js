@@ -23,7 +23,7 @@ const port = 5000
 //Middleware for the "req" 
 app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:5000', 'http://localhost:3000', '*', 'http://localhost:8000', 'localhost:3000'],
+  origin: ['http://localhost:5000', 'http://localhost:3000', '*', 'http://localhost:8000', 'localhost:3000', "https://momentmakers.vercel.app", "momentmakers.vercel.app"],
   credentials: true,
   methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
 
